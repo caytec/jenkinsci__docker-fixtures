@@ -27,6 +27,8 @@ package org.jenkinsci.test.acceptance.docker;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+
 import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -71,7 +73,7 @@ public final class DockerRule<T extends DockerContainer> implements TestRule {
     public T get() throws IOException, InterruptedException {
         if (container == null) {
             DockerImage image = build();
-            runlog = File.createTempFile("docker-" + type.getSimpleName() + "-run", ".log");
+            runlog = Files.createTempFile("docker-" + type.getSimpleName() + "-run", ".log").toFile();
             container = image.start(type).withLog(runlog).start();
         }
         return container;

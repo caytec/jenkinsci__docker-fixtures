@@ -125,7 +125,7 @@ public class Docker {
     }
 
     public DockerImage build(Class<? extends DockerContainer> fixture) throws IOException, InterruptedException {
-        File buildlog = File.createTempFile("docker-" + fixture.getSimpleName() + "-build", ".log");
+        File buildlog = Files.createTempFile("docker-" + fixture.getSimpleName() + "-build", ".log").toFile();
         DockerImage image = null;
         try {
             image = build(fixture, buildlog);

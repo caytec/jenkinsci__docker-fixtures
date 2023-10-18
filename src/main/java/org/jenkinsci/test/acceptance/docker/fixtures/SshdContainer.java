@@ -32,7 +32,7 @@ public class SshdContainer extends DockerContainer {
     public File getPrivateKey() {
         if (privateKey == null) {
             try {
-                privateKey = File.createTempFile("ssh", "key");
+                privateKey = Files.createTempFile("ssh", "key").toFile();
                 privateKey.deleteOnExit();
                 FileUtils.copyURLToFile(resource("unsafe").url, privateKey);
                 if (SystemUtils.IS_OS_UNIX) {
@@ -51,7 +51,7 @@ public class SshdContainer extends DockerContainer {
     public File getEncryptedPrivateKey() {
         if (privateKeyEnc == null) {
             try {
-                privateKeyEnc = File.createTempFile("ssh_enc", "key");
+                privateKeyEnc = Files.createTempFile("ssh_enc", "key").toFile();
                 privateKeyEnc.deleteOnExit();
                 FileUtils.copyURLToFile(resource("unsafe_enc_key").url, privateKeyEnc);
                 if (SystemUtils.IS_OS_UNIX) {
